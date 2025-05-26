@@ -142,12 +142,14 @@ public class Practice {
 
     if (vertex.data % 2 == 0) {
       return false;
-    } else {
-      for (Vertex<Integer> neighbor : vertex.neighbors) {
-        allOdd(neighbor, visited);
+    } 
+
+    for (Vertex<Integer> neighbor : vertex.neighbors) {
+      if (!allOdd(neighbor, visited)){
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   /**
