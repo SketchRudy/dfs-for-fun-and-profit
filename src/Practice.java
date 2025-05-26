@@ -44,7 +44,9 @@ public class Practice {
    * @return A set containing all reachable vertices, or an empty set if vertex is null.
    */
   public <T> Set<Vertex<T>> reachable(Vertex<T> vertex) {
-    return null;
+    Set<Vertex<T>> visited = new HashSet<>();
+    reachableHelper(vertex, visited);
+    return visited;
   }
 
   public <T> void reachableHelper(Vertex<T> vertex, Set<Vertex<T>> visited) {
@@ -66,7 +68,23 @@ public class Practice {
    * @return The maximum value of any reachable vertex, or Integer.MIN_VALUE if vertex is null.
    */
   public int max(Vertex<Integer> vertex) {
-    return -1;
+    Set<Vertex<Integer>> visited = new HashSet<>();
+    return maxHelper(vertex, visited);
+  }
+
+  public int maxHelper(Vertex<Integer> vertex, Set<Vertex<Integer>> visited) {
+    if (vertex == null) return Integer.MIN_VALUE;
+    if (visited.contains(vertex)) return 0;
+
+    visited.add(vertex);
+    // Add vertex data inside max to start
+    int max = vertex.data; 
+    for (Vertex<Integer> neighborData : vertex.neighbors) {
+        int neighborMax = maxHelper(neighborData, visited);
+        max = Math.max(max, neighborMax);
+
+    }
+    return max;
   }
 
   /**
