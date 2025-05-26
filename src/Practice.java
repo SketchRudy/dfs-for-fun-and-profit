@@ -50,7 +50,7 @@ public class Practice {
   }
 
   public <T> void reachableHelper(Vertex<T> vertex, Set<Vertex<T>> visited) {
-    if (visited.contains(vertex)) return ;
+    if (visited.contains(vertex) || vertex == null) return ;
 
     visited.add(vertex);
     for (Vertex<T> neighbor : vertex.neighbors) {
@@ -99,7 +99,24 @@ public class Practice {
    * @return A set containing all reachable leaf vertices, or an empty set if vertex is null.
    */
   public <T> Set<Vertex<T>> leaves(Vertex<T> vertex) {
-    return null;
+    Set<Vertex<T>> visited = new HashSet<>();
+    Set<Vertex<T>> leaves = new HashSet<>();
+    return leavesHelper(vertex, visited, leaves);
+  }
+
+  public <T> Set<Vertex<T>> leavesHelper(Vertex<T> vertex, Set<Vertex<T>> visited, Set<Vertex<T>> leaves) {
+    if (vertex == null) return leaves;
+    if (visited.contains(vertex)) return visited;
+    visited.add(vertex);
+
+    if (vertex.neighbors.isEmpty()) {
+      leaves.add(vertex);
+    }
+
+    for (Vertex<T> neighbors : vertex.neighbors) {
+      leavesHelper(neighbors, visited, leaves);
+    }
+    return leaves;
   }
 
 
